@@ -7,7 +7,7 @@ import math
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from mmcv.runner import load_checkpoint
 # from models.mit import mit_b4
-from .dc_decoder import dc_b1,dc_b3,dc_b5
+from .rcf_encoder import dc_b1,dc_b3,dc_b5
 import numpy as np
 import torchvision.models as models
 

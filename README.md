@@ -5,5 +5,5 @@ Thank you for your interest in our work. Please forgive us for only releasing pa
 
 We have made the following code available:
 - **[RCDFormer](models/model.py)**
-- **[RCF Encoder](models/dc_decoder.py)**
-- **[HMD Decoder](models/dc_decoder.py)**
+- **[RCF Encoder](models/rcf_encoder.py)**
+- **[HMD Decoder](models/model.py)**

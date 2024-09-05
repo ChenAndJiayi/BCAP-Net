@@ -126,7 +126,7 @@ class Attention(nn.Module):
         x = q.transpose(1, 2).reshape(B, N, C)
         return x, y_
 
-
+""" RDFM block """
 class Block(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
@@ -343,9 +343,9 @@ class SparseTransformer(nn.Module):
         fuse_outs = []
         sparse_outs = []
         # stage 1
-        x, H, W = self.patch_embed1(x.repeat(1,3,1,1)) # 此时的x中H,W已变成一维[b, 15488, 64]，.repeat(1,3,1,1)
-        # y也需要变成[b, 15488, 64]
+        x, H, W = self.patch_embed1(x.repeat(1,3,1,1)) 
         y_ = y[0].flatten(2).transpose(1, 2)
+        
         for i, blk in enumerate(self.block1):
             x,y_ = blk(x,y_, H, W)
         y_ = self.norm1(y_)
