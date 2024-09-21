@@ -10,9 +10,10 @@ We have made the following code available:
 
 ## Method
 The overall architecture of the recurrent cross-fusion depth-aware network.
-![fig2](example/fig2_00.png "The overall architecture of the recurrent cross-fusion depth-aware network")
+<div align="center">
+<img src="example/fig2_00.png" alt="fig2" width="500" height="180">
+</div>
 
-## Results
 <!--
 The quantitative comparison of results with other methods on the KITTI test dataset.
 | Method | RMSE$\downarrow$ (mm) | iRMSE$\downarrow$ (1/km) |MAE$\downarrow $(mm) | iMAE$\downarrow $(1/km) |
@@ -36,8 +37,12 @@ The quantitative comparison of results with other methods on the NYU depth V2 da
 | MFF-Net |  0.100 |0.015 |99.5 |99.9|100 |
 |   Our   | 0.091 |0.012 |99.6 |100 |100|
 -->
+## Results
 The qualitative comparison results on the KITTI dataset.
-![fig5](example/fig5_1_00.png "The qualitative comparison results on the KITTI dataset")
-
+<div align="center">
+<img src="example/fig5_1_00.png" alt="fig5" width="400" height="300">
+</div>
 The qualitative comparison results on the NYU depth v2 dataset.
-![fig6](example/fig6_1_00.png "The qualitative comparison results on the NYU depth v2 dataset")
+<div align="center">
+<img src="example/fig6_1_00.png" alt="fig5" width="500" height="120">
+</div>
