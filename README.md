@@ -10,7 +10,7 @@ We have made the following code available:
 
 ## Method
 The overall architecture of the recurrent cross-fusion depth-aware network.
-![fig2](example\fig2_00.png "The overall architecture of the recurrent cross-fusion depth-aware network")
+![fig2](example/fig2_00.png "The overall architecture of the recurrent cross-fusion depth-aware network")
 
 ## Results
 <!--
@@ -37,7 +37,7 @@ The quantitative comparison of results with other methods on the NYU depth V2 da
 |   Our   | 0.091 |0.012 |99.6 |100 |100|
 -->
 The qualitative comparison results on the KITTI dataset.
-![fig5](example\fig5_1_00.png "The qualitative comparison results on the KITTI dataset")
+![fig5](example/fig5_1_00.png "The qualitative comparison results on the KITTI dataset")
 
 The qualitative comparison results on the NYU depth v2 dataset.
-![fig6](example\fig6_1_00.png "The qualitative comparison results on the NYU depth v2 dataset")
+![fig6](example/fig6_1_00.png "The qualitative comparison results on the NYU depth v2 dataset")
