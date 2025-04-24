@@ -21,9 +21,9 @@ from einops.layers.torch import Rearrange
 
 
 
-class HMD_decoder(nn.Module):
+class HMDA_decoder(nn.Module):
     def __init__(self):
-        super(HMD_decoder,self).__init__()
+        super(HMDA_decoder,self).__init__()
         
         self.conv_block4_1 = nn.Sequential(
                                            conv3x3(256, 64,'GN',32),
@@ -132,7 +132,7 @@ class RCDFormer(nn.Module):
         self.max_depth = max_depth
 
         self.Sparse_encoder = dc_b5()
-        self.decoder  = HMD_decoder()
+        self.decoder  = HMDA_decoder()
         
         self.downChn1 =  nn.Sequential(conv3x3(256, 128,'GN',32),conv3x3(128, 64,'GN',32))
         self.downChn2 =  nn.Sequential(conv3x3(512, 256,'GN',32),conv3x3(256, 128,'GN',32))
