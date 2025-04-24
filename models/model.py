@@ -50,11 +50,11 @@ class HMDA_decoder(nn.Module):
         self.conv_block0_2 = nn.Sequential(conv3x3(8+2, 4,'GN',4//2),nn.Conv2d(4, 1,3,1,1))
         self.upx2= nn.PixelShuffle(2)
 
-        self.cspn0 = CSPN(in_channels=8, pt=10,depth_num=5)
-        self.cspn1 = CSPN(in_channels=8, pt=10,depth_num=4)
-        self.cspn2 = CSPN(in_channels=16, pt=8,depth_num=3)
-        self.cspn3 = CSPN(in_channels=32, pt=6,depth_num=2)
-        self.cspn4 = CSPN(in_channels=32, pt=4,depth_num=1)
+        self.DCPR0 = DCPR(in_channels=8, pt=10,depth_num=5)
+        self.DCPR1 = DCPR(in_channels=8, pt=10,depth_num=4)
+        self.DCPR2 = DCPR(in_channels=16, pt=8,depth_num=3)
+        self.DCPR3 = DCPR(in_channels=32, pt=6,depth_num=2)
+        self.DCPR4 = DCPR(in_channels=32, pt=4,depth_num=1)
 
         self.wpool4 = WPool(32, level=4)
         self.wpool3 = WPool(32, level=3)
@@ -83,7 +83,7 @@ class HMDA_decoder(nn.Module):
         depthF4 = self.conv_block4_1(depthF4) # 32
         SD4     = self.wpool4(sparse_depth,depthF4)
         depth4  = self.conv_block4_2(torch.cat([depthF4,SD4],dim=1))
-        depth4  = self.cspn4(depthF4,depth4,SD4)
+        depth4  = self.DCPR4(depthF4,depth4,SD4)
         depth4  = F.interpolate(depth4, scale_factor=2, mode='bilinear', align_corners=True)
         
         depthF3 = self.upx2(torch.cat([fuse_image[2],fuse_sparse[2],depthF4],dim=1)) # 88*1/8
@@ -91,7 +91,7 @@ class HMDA_decoder(nn.Module):
         SD3     = self.wpool3(sparse_depth,depthF3)
         depth3  = self.conv_block3_2(torch.cat([depthF3,depth4,SD3],dim=1))
         depths  = torch.cat([depth4,depth3],dim=1)
-        depth3  = self.cspn3(depthF3,depths,SD3)
+        depth3  = self.DCPR3(depthF3,depths,SD3)
         #--------
         depth4  = F.interpolate(depth4, scale_factor=2, mode='bilinear', align_corners=True)
         depth3  = F.interpolate(depth3, scale_factor=2, mode='bilinear', align_corners=True)
@@ -101,7 +101,7 @@ class HMDA_decoder(nn.Module):
         SD2     = self.wpool2(sparse_depth,depthF2)
         depth2  = self.conv_block2_2(torch.cat([depthF2,depth3,SD2],dim=1))
         depths  = torch.cat([depth4,depth3,depth2],dim=1)
-        depth2  = self.cspn2(depthF2,depths,SD2)
+        depth2  = self.DCPR2(depthF2,depths,SD2)
         #----------
         depth4  = F.interpolate(depth4, scale_factor=2, mode='bilinear', align_corners=True)
         depth3  = F.interpolate(depth3, scale_factor=2, mode='bilinear', align_corners=True)
@@ -112,7 +112,7 @@ class HMDA_decoder(nn.Module):
         SD1     = self.wpool1(sparse_depth,depthF1)
         depth1  = self.conv_block1_2(torch.cat([depthF1,depth2,SD1],dim=1))
         depths  = torch.cat([depth4,depth3,depth2,depth1],dim=1)
-        depth1  = self.cspn1(depthF1,depths,SD1)
+        depth1  = self.DCPR1(depthF1,depths,SD1)
         #----
         depth4  = F.interpolate(depth4, scale_factor=2, mode='bilinear', align_corners=True)
         depth3  = F.interpolate(depth3, scale_factor=2, mode='bilinear', align_corners=True)
@@ -123,10 +123,10 @@ class HMDA_decoder(nn.Module):
         depthF0 = self.conv_block0_1(torch.cat([self.upx2(image_feats[0]),self.upx2(sparse_feats[0]),depthF1,sparse_depth],dim=1))
         #-------------------
         depths  = torch.cat([depth4,depth3,depth2,depth1],dim=1)
-        depth0  = self.cspn0(depthF0,depths,sparse_depth)
+        depth0  = self.DCPR0(depthF0,depths,sparse_depth)
         return depth4, depth3, depth2, depth1,depth0
 
-class RCDFormer(nn.Module):
+class BCAPNet(nn.Module):
     def __init__(self, max_depth=10.0, mode='train'):
         super().__init__()
         self.max_depth = max_depth
