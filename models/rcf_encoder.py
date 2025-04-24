@@ -126,7 +126,7 @@ class Attention(nn.Module):
         x = q.transpose(1, 2).reshape(B, N, C)
         return x, y_
 
-""" RDFM block """
+""" BRCFM  block """
 class Block(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
